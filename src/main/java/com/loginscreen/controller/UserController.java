@@ -1,29 +1,29 @@
 package com.loginscreen.controller;
 
 import com.loginscreen.controller.model.entity.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.loginscreen.service.UserService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
-    @GetMapping
-    public List<User> findAll(){
+    private UserService userService;
 
-        User u1 = new User(1L, "User 01", "user01@mail.com");
-        User u2 = new User(2L, "User 02", "user02@mail.com");
-        User u3 = new User(3L, "User 03", "user03@mail.com");
-
-        List<User> list = new ArrayList<>();
-        list.add(u1);
-        list.add(u2);
-        list.add(u3);
-
-        return list;
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody User user){
+        User userSave = userService.insert(user);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(userSave.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
