@@ -26,4 +26,11 @@ public class UserController {
                 .path("/{id}").buildAndExpand(userSave.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id){
+        User user = userService.findById(id);
+        return ResponseEntity.ok().body(user);
+    }
+
 }
