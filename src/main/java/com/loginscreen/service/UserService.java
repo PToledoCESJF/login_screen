@@ -1,6 +1,6 @@
 package com.loginscreen.service;
 
-import com.loginscreen.controller.model.entity.User;
+import com.loginscreen.model.entity.User;
 import com.loginscreen.repository.UserRepository;
 import com.loginscreen.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;

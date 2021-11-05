@@ -1,6 +1,6 @@
 package com.loginscreen.repository;
 
-import com.loginscreen.controller.model.entity.User;
+import com.loginscreen.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

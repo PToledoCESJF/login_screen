@@ -1,4 +1,4 @@
-package com.loginscreen.controller.model.entity;
+package com.loginscreen.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
