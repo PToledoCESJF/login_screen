@@ -1,6 +1,9 @@
 package com.loginscreen.service;
 
+import com.loginscreen.model.dto.UserSearchDTO;
+import com.loginscreen.model.dto.UserSaveDTO;
 import com.loginscreen.model.entity.User;
+import com.loginscreen.model.mapper.UserMapper;
 import com.loginscreen.repository.UserRepository;
 import com.loginscreen.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
@@ -14,17 +17,18 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private final UserMapper userMapper = UserMapper.INSTANCE;
 
-    public User insert(User user){
-        user.setId(null);
-        user = userRepository.save(user);
-        return user;
+    public User insert(UserSaveDTO userSaveDTO){
+        User userToSave = userMapper.toUser(userSaveDTO);
+        userToSave = userRepository.save(userToSave);
+        return userToSave;
     }
 
-    public User findById(Long id){
+    public UserSearchDTO findById(Long id){
         Optional<User> userOptional = userRepository.findById(id);
-        return userOptional.orElseThrow(() -> new ObjectNotFoundException(
+        return userMapper.toDto(userOptional.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado. Id: " + id + ", Tipo: " + User.class.getName()
-        ));
+        )));
     }
 }
