@@ -2,6 +2,7 @@ package com.loginscreen.controller;
 
 import com.loginscreen.model.dto.UserSearchDTO;
 import com.loginscreen.model.dto.UserSaveDTO;
+import com.loginscreen.model.dto.UserUpdateDTO;
 import com.loginscreen.model.entity.User;
 import com.loginscreen.model.mapper.UserMapper;
 import com.loginscreen.service.UserService;
@@ -33,6 +34,12 @@ public class UserController {
     public ResponseEntity<UserSearchDTO> findById(@PathVariable Long id){
         UserSearchDTO userSearchDTO = userService.findById(id);
         return ResponseEntity.ok().body(userSearchDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@Valid @RequestBody UserUpdateDTO userUpdateDTO, @PathVariable Long id){
+        userService.update(userUpdateDTO, id);
+        return ResponseEntity.noContent().build();
     }
 
 }
