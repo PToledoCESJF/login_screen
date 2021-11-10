@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -40,6 +41,11 @@ public class UserController {
     public ResponseEntity<Void> update(@Valid @RequestBody UserUpdateDTO userUpdateDTO, @PathVariable Long id){
         userService.update(userUpdateDTO, id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserSearchDTO>> findAll(){
+        return ResponseEntity.ok().body(userService.findAll());
     }
 
 }

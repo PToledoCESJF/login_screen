@@ -11,7 +11,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -37,10 +39,16 @@ public class UserService {
         return userRepository.save(updateUser(userSearchDTO, userUpdateDTO));
     }
 
+    public List<UserSearchDTO> findAll() {
+        List<User> listUser = userRepository.findAll();
+        return listUser.stream().map(userMapper::toDto).collect(Collectors.toList());
+    }
+
 
 
 
     // TODO >> QUANDO CRIAR O AVATAR E/OU ALGUM OUTRO ATRIBUTO, INSERIR AQUI
+
     private User updateUser(UserSearchDTO userSearchDTO, UserUpdateDTO userUpdateDTO) {
         User userNew = userMapper.toUserFromSearch(userSearchDTO);
         userNew.setName(userUpdateDTO.getName());
