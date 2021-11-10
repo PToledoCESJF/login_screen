@@ -6,9 +6,11 @@ import com.loginscreen.model.dto.UserUpdateDTO;
 import com.loginscreen.model.entity.User;
 import com.loginscreen.model.mapper.UserMapper;
 import com.loginscreen.repository.UserRepository;
+import com.loginscreen.service.exception.DataIntegrityException;
 import com.loginscreen.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +44,15 @@ public class UserService {
     public List<UserSearchDTO> findAll() {
         List<User> listUser = userRepository.findAll();
         return listUser.stream().map(userMapper::toDto).collect(Collectors.toList());
+    }
+
+    public void delete(Long id) {
+        UserSearchDTO userSearchDTO = findById(id);
+        try {
+            userRepository.deleteById(id);
+        } catch (DataIntegrityException e){
+            throw new DataIntegrityException("Não é permitido excluir usuários que possuem dados relacionados com outras tabelas");
+        }
     }
 
 
