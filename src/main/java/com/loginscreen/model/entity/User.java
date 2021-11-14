@@ -6,10 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @NoArgsConstructor
@@ -26,6 +23,8 @@ public class User implements Serializable {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
 
 }

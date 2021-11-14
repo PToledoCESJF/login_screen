@@ -1,5 +1,6 @@
 package com.loginscreen.model.dto;
 
+import com.loginscreen.service.validation.UserInsert;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @EqualsAndHashCode
+@UserInsert
 public class UserSaveDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

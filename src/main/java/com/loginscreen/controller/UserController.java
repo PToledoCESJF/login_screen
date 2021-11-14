@@ -4,7 +4,6 @@ import com.loginscreen.model.dto.UserSearchDTO;
 import com.loginscreen.model.dto.UserSaveDTO;
 import com.loginscreen.model.dto.UserUpdateDTO;
 import com.loginscreen.model.entity.User;
-import com.loginscreen.model.mapper.UserMapper;
 import com.loginscreen.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
