@@ -7,13 +7,14 @@ import com.loginscreen.model.entity.User;
 import com.loginscreen.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -43,8 +44,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserSearchDTO>> findAll(){
-        return ResponseEntity.ok().body(userService.findAll());
+    public ResponseEntity<Page<UserSearchDTO>> findAll(Pageable pageable){
+        return ResponseEntity.ok().body(userService.findAll(pageable));
     }
 
     @DeleteMapping(value = "/{id}")

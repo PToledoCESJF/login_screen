@@ -10,12 +10,11 @@ import com.loginscreen.service.exception.DataIntegrityException;
 import com.loginscreen.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -41,9 +40,9 @@ public class UserService {
         return userRepository.save(updateUser(userSearchDTO, userUpdateDTO));
     }
 
-    public List<UserSearchDTO> findAll() {
-        List<User> listUser = userRepository.findAll();
-        return listUser.stream().map(userMapper::toDto).collect(Collectors.toList());
+    public Page<UserSearchDTO> findAll(Pageable pageable) {
+        Page<User> listUser = userRepository.findAll(pageable);
+        return listUser.map(userMapper::toDto);
     }
 
     public void delete(Long id) {
