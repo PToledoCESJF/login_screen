@@ -1,5 +1,6 @@
 package com.loginscreen.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,5 +24,8 @@ public class User implements Serializable {
 
     @Column(unique = true)
     private String email;
+
+    @JsonIgnore
+    private String password;
 
 }

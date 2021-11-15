@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,9 +22,11 @@ import java.util.Optional;
 public class UserService {
 
     private UserRepository userRepository;
+    private BCryptPasswordEncoder passwordEncoder;
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
     public User insert(UserSaveDTO userSaveDTO){
+        userSaveDTO.setPassword(passwordEncoder.encode(userSaveDTO.getPassword()));
         User userToSave = userMapper.toUser(userSaveDTO);
         return userRepository.save(userToSave);
     }
@@ -62,6 +65,7 @@ public class UserService {
     private User updateUser(UserSearchDTO userSearchDTO, UserUpdateDTO userUpdateDTO) {
         User userNew = userMapper.toUserFromSearch(userSearchDTO);
         userNew.setName(userUpdateDTO.getName());
+        userNew.setPassword(passwordEncoder.encode(userUpdateDTO.getPassword()));
         return userNew;
     }
 }

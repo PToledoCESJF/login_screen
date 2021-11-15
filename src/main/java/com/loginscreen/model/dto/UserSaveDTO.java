@@ -30,4 +30,8 @@ public class UserSaveDTO implements Serializable {
     @Email(message = "Email inválido.")
     private String email;
 
+    @NotEmpty(message = "Este campo deve ser preenchido.")
+    @Size(min = 6, message = "A senha deve conter no mínimo 6 caracteres.")
+    private String password;
+
 }
