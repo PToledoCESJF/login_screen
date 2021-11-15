@@ -58,10 +58,6 @@ public class UserService {
     }
 
 
-
-
-    // TODO >> QUANDO CRIAR O AVATAR E/OU ALGUM OUTRO ATRIBUTO, INSERIR AQUI
-
     private User updateUser(UserSearchDTO userSearchDTO, UserUpdateDTO userUpdateDTO) {
         User userNew = userMapper.toUserFromSearch(userSearchDTO);
         userNew.setName(userUpdateDTO.getName());

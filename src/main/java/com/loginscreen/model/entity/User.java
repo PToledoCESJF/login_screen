@@ -1,13 +1,15 @@
 package com.loginscreen.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.loginscreen.model.enumerator.Profile;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -27,5 +29,31 @@ public class User implements Serializable {
 
     @JsonIgnore
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tb_profiles")
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private Set<Integer> profiles = new HashSet<>();
+
+    public User() {
+        addProfile(Profile.USER);
+    }
+
+    public User(Long id, String name, String email, String password) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        addProfile(Profile.USER);
+    }
+
+    public Set<Profile> getProfiles() {
+        return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addProfile(Profile profile){
+        profiles.add(profile.getCod());
+    }
 
 }
