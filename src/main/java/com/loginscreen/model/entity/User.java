@@ -2,7 +2,6 @@ package com.loginscreen.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
@@ -13,8 +12,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-@Entity(name = "tb_users")
+@Entity
+@Table(name = "tb_users")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
