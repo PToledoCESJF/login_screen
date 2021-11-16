@@ -4,14 +4,18 @@ import com.loginscreen.model.dto.UserSearchDTO;
 import com.loginscreen.model.dto.UserSaveDTO;
 import com.loginscreen.model.dto.UserUpdateDTO;
 import com.loginscreen.model.entity.User;
+import com.loginscreen.model.enumerator.Profile;
 import com.loginscreen.model.mapper.UserMapper;
 import com.loginscreen.repository.UserRepository;
+import com.loginscreen.security.UserSS;
+import com.loginscreen.service.exception.AuthorizationException;
 import com.loginscreen.service.exception.DataIntegrityException;
 import com.loginscreen.service.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +29,15 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
+    public static UserSS authenticated(){
+        try {
+            // Retorna o usuário logado
+            return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        }catch (Exception e) {
+            return null;
+        }
+    }
+
     public User insert(UserSaveDTO userSaveDTO){
         userSaveDTO.setPassword(passwordEncoder.encode(userSaveDTO.getPassword()));
         User userToSave = userMapper.toUser(userSaveDTO);
@@ -32,6 +45,12 @@ public class UserService {
     }
 
     public UserSearchDTO findById(Long id){
+
+        UserSS userSS = authenticated();
+        if (userSS == null || !userSS.hasRole(Profile.ADMIN) && !id.equals(userSS.getId())){
+            throw new AuthorizationException("Acesso negado.");
+        }
+
         Optional<User> userOptional = userRepository.findById(id);
         return userMapper.toDto(userOptional.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado. Id: " + id + ", Tipo: " + User.class.getName()
