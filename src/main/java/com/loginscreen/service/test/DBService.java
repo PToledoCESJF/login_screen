@@ -36,6 +36,7 @@ public class DBService {
         User user10 = userMapper.toUser(user10DTO);
 
 
+
         user10.addProfile(Profile.ADMIN);
 
         userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5, user10));
