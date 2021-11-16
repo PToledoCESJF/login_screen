@@ -15,7 +15,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,14 +28,6 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
-    public static UserSS authenticated(){
-        try {
-            // Retorna o usuário logado
-            return (UserSS) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        }catch (Exception e) {
-            return null;
-        }
-    }
 
     public User insert(UserSaveDTO userSaveDTO){
         userSaveDTO.setPassword(passwordEncoder.encode(userSaveDTO.getPassword()));
@@ -46,7 +37,7 @@ public class UserService {
 
     public UserSearchDTO findById(Long id){
 
-        UserSS userSS = authenticated();
+        UserSS userSS = UserLoggedService.authenticated();
         if (userSS == null || !userSS.hasRole(Profile.ADMIN) && !id.equals(userSS.getId())){
             throw new AuthorizationException("Acesso negado.");
         }
