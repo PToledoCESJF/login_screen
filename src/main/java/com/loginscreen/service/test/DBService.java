@@ -23,7 +23,7 @@ public class DBService {
 
     public void instantiateDatabase() throws ParseException {
 
-        User user1 = new User(null, "Usuário de Teste 01", "usuario_01@mail.com", pswEncoder.encode("123456"));
+        User user1 = new User(null, "Usuário de Teste 01", "ptoledo.bsices@gmail.com", pswEncoder.encode("123456"));
         User user2 = new User(null, "Usuário de Teste 02", "usuario_02@mail.com", pswEncoder.encode("123456"));
         User user3 = new User(null, "Usuário de Teste 03", "usuario_03@mail.com", pswEncoder.encode("123456"));
         User user4 = new User(null, "Usuário de Teste 04", "usuario_04@mail.com", pswEncoder.encode("123456"));

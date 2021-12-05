@@ -26,6 +26,7 @@ public class UserService {
 
     private UserRepository userRepository;
     private BCryptPasswordEncoder passwordEncoder;
+    private iEmailService emailService;
     private final UserMapper userMapper = UserMapper.INSTANCE;
 
 

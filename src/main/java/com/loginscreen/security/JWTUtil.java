@@ -8,22 +8,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.Date;
 
 @Component
 public class JWTUtil {
 
-    @Value("${jwt.secret}")
-    private String secret;
-//
-//    @Value("${jwt.expiration}")
-//    private String expiration;
+    @Value("${jwt.expiration}")
+    private Long expiration;
 
-    private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    private final Key key;
+
+    public JWTUtil() {
+        key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+    }
 
     public String generateToken(String username){
         return Jwts.builder()
                 .setSubject(username)
                 .signWith(key)
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .compact();
     }
 
@@ -31,7 +34,9 @@ public class JWTUtil {
         Claims claims = getClaims(token);
         if(claims != null){
             String username = claims.getSubject();
-            if(username != null){
+            Date expirationDate = claims.getExpiration();
+            Date now = new Date(System.currentTimeMillis());
+            if(username != null && expirationDate != null && now.before(expirationDate)){
                 return true;
             }
         }

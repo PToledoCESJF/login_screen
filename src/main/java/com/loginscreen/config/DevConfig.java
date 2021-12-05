@@ -1,5 +1,7 @@
 package com.loginscreen.config;
 
+import com.loginscreen.service.SmtpEmailService;
+import com.loginscreen.service.iEmailService;
 import com.loginscreen.service.test.DBService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,4 +22,10 @@ public class DevConfig {
         dbService.instantiateDatabase();
         return true;
     }
+
+    @Bean
+    public iEmailService emailService(){
+        return new SmtpEmailService();
+    }
+
 }
