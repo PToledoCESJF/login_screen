@@ -20,3 +20,12 @@ export async function LoginRequest(email: string, password: string) {
     return null;    
   }
 }
+
+export async function ForgotRequest(email: string) {
+  try {
+    const request = await Api.post("auth/forgot", { email });
+    return request.data;
+  } catch (error) {
+    return null;    
+  }
+}

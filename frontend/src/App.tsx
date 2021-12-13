@@ -1,7 +1,8 @@
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { Login } from './components/Login';
+import { Login } from './page/Login';
 import { ProtectedLayout } from './components/ProtectedLayout';
 import { AuthProvider } from './context/AuthProvider';
+import { Forgot } from './page/Forgot';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
           </Route>
           <Route path='/login'>
             <Login />
+          </Route>
+          <Route path='/forgot'>
+            <Forgot />
           </Route>
           <Redirect to='/login' />
         </Switch>

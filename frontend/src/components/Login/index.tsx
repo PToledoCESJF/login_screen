@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import { useAuth } from "../../context/AuthProvider/useAuth";
 import Logo from "../../assets/logo.png";
 
-export const Login = () => {
+export const LoginComponent = () => {
   const auth = useAuth();
   const history = useHistory();
 
@@ -16,6 +16,11 @@ export const Login = () => {
     } catch (error) {
       message.error("Email e/ou senha inválidos!");
     }
+  }
+
+  // async function onForgot( values: { email: string }){ history.push('/auth/forgot'); }
+  const onForgot = ( ) => { 
+    history.push('/forgot'); 
   }
 
   return (
@@ -37,7 +42,7 @@ export const Login = () => {
                 <Checkbox>Lembre de mim</Checkbox>
               </Form.Item>
               <Form.Item style={{ paddingTop: '10px' }}>
-                <Button type="link" style={{ float: 'left' }}> Esqueci a senha </Button>
+                <Button type="link" style={{ float: 'left' }} onClick={onForgot} > Esqueci a senha </Button>
                 <Button type="link" style={{ float: 'right' }}> Registre-me agora </Button>
               </Form.Item>
               <Form.Item>
