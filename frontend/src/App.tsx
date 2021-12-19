@@ -3,6 +3,7 @@ import { Login } from './page/Login';
 import { ProtectedLayout } from './components/ProtectedLayout';
 import { AuthProvider } from './context/AuthProvider';
 import { Forgot } from './page/Forgot';
+import { Profile } from './page/Profile';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <Switch>
           <Route path='/profile'>
             <ProtectedLayout>
-              <h1>Este é o componente Profile.</h1>
+              <Profile />
             </ProtectedLayout>
           </Route>
           <Route path='/login'>

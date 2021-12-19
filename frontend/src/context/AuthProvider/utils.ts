@@ -21,6 +21,15 @@ export async function LoginRequest(email: string, password: string) {
   }
 }
 
+export async function CreateRequest(name: string, email: string, password: string) {
+  try {
+    const request = await Api.post("users", { name, email, password });
+    return request.data;
+  } catch (error) {
+    return error;    
+  }
+}
+
 export async function ForgotRequest(email: string) {
   try {
     const request = await Api.post("auth/forgot", { email });
