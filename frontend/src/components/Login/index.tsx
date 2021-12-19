@@ -2,7 +2,6 @@ import { Button, Checkbox, Form, Input, Row } from "antd";
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 
 interface iLogin {
-  // onFinish(event: React.ChangeEvent<HTMLInputElement>): Promise<void>;
   onFinish(event: any): any;
   onForgot(event: any): any;
   onSignUp(event: any): any;
